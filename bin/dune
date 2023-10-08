@@ -1,4 +1,4 @@
 (executable
  (public_name strike)
  (name main)
- (libraries strike))
+ (libraries strike dream))
