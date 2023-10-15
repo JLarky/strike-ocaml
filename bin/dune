@@ -1,4 +1,3 @@
 (executable
- (public_name strike)
  (name main)
- (libraries strike dream))
+ (libraries strike_example_app))
