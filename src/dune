@@ -1,7 +1,7 @@
 (library
  (inline_tests)
  (name strike_example_app)
- (libraries digestif dream dream-pure dream.server lwt.unix magic-mime)
+ (libraries tyxml digestif dream dream-pure dream.server lwt.unix magic-mime)
  (preprocess
   (pps lwt_ppx))
  (instrumentation

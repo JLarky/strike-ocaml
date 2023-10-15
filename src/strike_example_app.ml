@@ -1,3 +1,5 @@
+open Tyxml
+
 module H = struct
   type t = {
     (* *)
@@ -118,12 +120,17 @@ let run () =
          Dream.get "/static/app/**" @@ Dream.static "src/assets";
          Dream.get "/_strike/**" @@ Dream.static "src/strike_http/assets";
          Dream.get "/" (fun _ ->
+             let mypage =
+               Tyxml.Html.(div ~a:[ a_id "app" ] [ h1 [ txt "Hello" ] ])
+             in
+             let s = Format.asprintf "%a" (Html.pp_elt ()) mypage in
              let str = Strike.render_to_string App.page in
              let json =
                Printf.sprintf
-                 "<script>self.__rsc=self.__rsc||[];__rsc.push(%s)</script>"
-                 (Yojson.Safe.to_string @@ `Assoc [ ("page", `String str) ])
+                 {|<script>self.__rsc=self.__rsc||[];__rsc.push('%s')</script>|}
+                 s
              in
+
              let response = Dream.response (str ^ json) in
              Dream.add_header response "Content-Type" Dream.text_html;
              Lwt.return response);
